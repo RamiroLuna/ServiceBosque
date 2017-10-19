@@ -263,7 +263,7 @@ public class ConsultaReforestemosDAO {
         QueryRunner qr = new QueryRunner(ds);
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT \n" +
-        "	CASE WHEN imagen.consecutivo IS NULL THEN ' ' ELSE imagen.consecutivo END AS consecutivo, \n" +
+        "	CASE WHEN imagen.consecutivo IS NULL THEN 0 ELSE imagen.consecutivo END AS consecutivo, \n" +
         "	CASE WHEN imagen.folio IS NULL THEN ' ' ELSE imagen.folio END AS folio, \n" +
         "	CASE WHEN imagen.url IS NULL THEN ' ' ELSE imagen.url END AS url, \n" +
         "	CASE WHEN to_char(to_date(imagen.fecha,'dd/mm/yyyy'), 'dd/mm/yyyy') IS NULL THEN '01/01/1999' ELSE to_char(to_date(imagen.fecha,'dd/mm/yyyy'), 'dd/mm/yyyy') END AS fecha,\n" +
