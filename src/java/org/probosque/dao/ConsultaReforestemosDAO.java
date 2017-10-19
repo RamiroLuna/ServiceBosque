@@ -93,7 +93,7 @@ public class ConsultaReforestemosDAO {
         QueryRunner qr = new QueryRunner(ds);
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT \n" +
-        "	CASE WHEN infractores.consecutivo IS NULL THEN ' ' ELSE infractores.consecutivo END AS consecutivo, \n" +
+        "	CASE WHEN infractores.consecutivo IS NULL THEN 0 ELSE infractores.consecutivo END AS consecutivo, \n" +
         "	CASE WHEN infractores.folio IS NULL THEN ' ' ELSE infractores.folio END AS folio, \n" +
         "	CASE WHEN infractores.nombre IS NULL OR infractores.nombre = 'S/D' THEN ' ' ELSE infractores.nombre END AS nombre, \n" +
         "	CASE WHEN sexoinfractor.descripcion IS NULL THEN ' ' ELSE sexoinfractor.descripcion END AS sexo, \n" +
@@ -118,7 +118,7 @@ public class ConsultaReforestemosDAO {
         QueryRunner qr = new QueryRunner(ds);
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT \n" +
-        "	CASE WHEN participantes.consecutivo IS NULL THEN ' ' ELSE participantes.consecutivo END AS consecutivo, \n" +
+        "	CASE WHEN participantes.consecutivo IS NULL THEN 0 ELSE participantes.consecutivo END AS consecutivo, \n" +
         "	CASE WHEN participantes.folio IS NULL THEN ' ' ELSE participantes.folio END AS folio, \n" +
         "	CASE WHEN dependencia.descripcion IS NULL THEN ' ' ELSE dependencia.descripcion END AS dependencia, \n" +
         "	CASE WHEN CAST(participantes.cantidad AS TEXT)='0' OR CAST(participantes.cantidad AS TEXT) IS NULL THEN ' '  ELSE CAST(participantes.cantidad AS TEXT ) END AS cantidad\n" +
@@ -138,7 +138,7 @@ public class ConsultaReforestemosDAO {
         QueryRunner qr = new QueryRunner(ds);
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT \n" +
-        "	CASE WHEN vehiculos.consecutivo IS NULL THEN ' ' ELSE vehiculos.consecutivo END AS consecutivo, \n" +
+        "	CASE WHEN vehiculos.consecutivo IS NULL THEN 0 ELSE vehiculos.consecutivo END AS consecutivo, \n" +
         "	CASE WHEN vehiculos.folio IS NULL THEN ' ' ELSE vehiculos.folio END AS folio, \n" +
         "	CASE WHEN dependencia.descripcion IS NULL THEN ' ' ELSE dependencia.descripcion END AS dependencia, \n" +
         "	CASE WHEN CAST(vehiculos.cantidad AS TEXT)='0' OR CAST(vehiculos.cantidad AS TEXT) IS NULL THEN ' '  ELSE CAST(vehiculos.cantidad AS TEXT ) END AS cantidad\n" +
@@ -206,7 +206,7 @@ public class ConsultaReforestemosDAO {
         QueryRunner qr = new QueryRunner(ds);
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT \n" +
-        "	CASE WHEN predios.consecutivo IS NULL THEN ' ' ELSE predios.consecutivo END AS consecutivo,\n" +
+        "	CASE WHEN predios.consecutivo IS NULL THEN 0 ELSE predios.consecutivo END AS consecutivo,\n" +
         "	CASE WHEN predios.folio IS NULL THEN ' ' ELSE predios.folio END AS folio,\n" +
         "	CASE WHEN predios.clave_unica_de_predio IS NULL THEN ' ' ELSE predios.clave_unica_de_predio END AS clave_unica_de_predio\n" +
         "	FROM formularios.principal\n" +
@@ -263,7 +263,7 @@ public class ConsultaReforestemosDAO {
         QueryRunner qr = new QueryRunner(ds);
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT \n" +
-        "	CASE WHEN imagen.consecutivo IS NULL THEN ' ' ELSE imagen.consecutivo END AS consecutivo, \n" +
+        "	CASE WHEN imagen.consecutivo IS NULL THEN 0 ELSE imagen.consecutivo END AS consecutivo, \n" +
         "	CASE WHEN imagen.folio IS NULL THEN ' ' ELSE imagen.folio END AS folio, \n" +
         "	CASE WHEN imagen.url IS NULL THEN ' ' ELSE imagen.url END AS url, \n" +
         "	CASE WHEN to_char(to_date(imagen.fecha,'dd/mm/yyyy'), 'dd/mm/yyyy') IS NULL THEN '01/01/1999' ELSE to_char(to_date(imagen.fecha,'dd/mm/yyyy'), 'dd/mm/yyyy') END AS fecha,\n" +
