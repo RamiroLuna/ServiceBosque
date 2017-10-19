@@ -206,7 +206,7 @@ public class ConsultaReforestemosDAO {
         QueryRunner qr = new QueryRunner(ds);
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT \n" +
-        "	CASE WHEN predios.consecutivo IS NULL THEN ' ' ELSE predios.consecutivo END AS consecutivo,\n" +
+        "	CASE WHEN predios.consecutivo IS NULL THEN 0 ELSE predios.consecutivo END AS consecutivo,\n" +
         "	CASE WHEN predios.folio IS NULL THEN ' ' ELSE predios.folio END AS folio,\n" +
         "	CASE WHEN predios.clave_unica_de_predio IS NULL THEN ' ' ELSE predios.clave_unica_de_predio END AS clave_unica_de_predio\n" +
         "	FROM formularios.principal\n" +
