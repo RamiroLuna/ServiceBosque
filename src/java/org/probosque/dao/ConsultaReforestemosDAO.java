@@ -62,7 +62,7 @@ public class ConsultaReforestemosDAO {
         "        CASE WHEN reparacion_danio IS NULL THEN 0 ELSE reparacion_danio END AS reparacion_danio, \n" +
         "        CASE WHEN total_dictamen IS NULL THEN 0 ELSE total_dictamen END AS total_dictamen, \n" +
         "        CASE WHEN observaciones IS NULL OR observaciones = 'S/D' THEN ' ' ELSE observaciones END AS observaciones, \n" +
-        "        CASE WHEN anio IS NULL THEN ' '  ELSE anio END AS anio, \n" +
+        "        CASE WHEN anio IS NULL THEN 0  ELSE anio END AS anio, \n" +
         "	 CASE WHEN region.descripcion IS NULL THEN ' ' ELSE region.descripcion END AS region,  \n" +
         "        CASE WHEN modulopredio_estado IS NULL THEN ' ' ELSE modulopredio_estado END AS modulopredio_estado, \n" +
         "        CASE WHEN municipio.descripcion IS NULL THEN ' ' ELSE municipio.descripcion END AS modulopredio_municipio, \n" +
@@ -75,11 +75,11 @@ public class ConsultaReforestemosDAO {
         "        LEFT JOIN catalogos.localidad ON (CAST (formularios.principal.modulopredio_localidad AS INTEGER) = catalogos.localidad.id AND CAST (formularios.principal.modulopredio_municipio AS INTEGER) = catalogos.localidad.id_municipio )\n" +
         "        LEFT JOIN catalogos.tipoaccion ON CAST(formularios.principal.tipo_accion AS INTEGER) = catalogos.tipoaccion.id\n" +
         "        LEFT JOIN catalogos.zonacritica ON CAST(formularios.principal.zona_critica AS INTEGER) = catalogos.zonacritica.id\n" +
-        "        LEFT JOIN catalogos.tipodocumento ON formularios.principal.tipo_documento = CAST(catalogos.tipodocumento.id AS TEXT)\n" +
-        "        LEFT JOIN catalogos.dependenciaexpidedocumento ON formularios.principal.dependencia_expide_documento = CAST(catalogos.dependenciaexpidedocumento.id AS TEXT)\n" +
-        "        LEFT JOIN catalogos.agenciaministerio ON formularios.principal.agencia_ministerio_solicita_dictamen = CAST(catalogos.agenciaministerio.id AS TEXT)\n" +
-        "        LEFT JOIN catalogos.medidaseguridad ON formularios.principal.medidas_seguridad = CAST(catalogos.medidaseguridad.id AS TEXT)\n" +
-        "        LEFT JOIN catalogos.dictaminador ON formularios.principal.inspector_forestal = CAST(catalogos.dictaminador.id AS TEXT)\n" +
+        "        LEFT JOIN catalogos.tipodocumento ON formularios.principal.tipo_documento = CAST(catalogos.tipodocumento.id AS INTEGER)\n" +
+        "        LEFT JOIN catalogos.dependenciaexpidedocumento ON formularios.principal.dependencia_expide_documento = CAST(catalogos.dependenciaexpidedocumento.id AS INTEGER)\n" +
+        "        LEFT JOIN catalogos.agenciaministerio ON formularios.principal.agencia_ministerio_solicita_dictamen = CAST(catalogos.agenciaministerio.id AS INTEGER)\n" +
+        "        LEFT JOIN catalogos.medidaseguridad ON formularios.principal.medidas_seguridad = CAST(catalogos.medidaseguridad.id AS INTEGER)\n" +
+        "        LEFT JOIN catalogos.dictaminador ON formularios.principal.inspector_forestal = CAST(catalogos.dictaminador.id AS INTEGER)\n" +
         "        WHERE folio = '"+folio+"'");
         ResultSetHandler rsh = new BeanListHandler(ListProgram8.class);
         List<ListProgram8> result = (List<ListProgram8>)qr.query(sql.toString(), rsh);
