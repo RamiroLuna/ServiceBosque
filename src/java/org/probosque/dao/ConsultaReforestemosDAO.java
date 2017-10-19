@@ -138,7 +138,7 @@ public class ConsultaReforestemosDAO {
         QueryRunner qr = new QueryRunner(ds);
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT \n" +
-        "	CASE WHEN vehiculos.consecutivo IS NULL THEN ' ' ELSE vehiculos.consecutivo END AS consecutivo, \n" +
+        "	CASE WHEN vehiculos.consecutivo IS NULL THEN 0 ELSE vehiculos.consecutivo END AS consecutivo, \n" +
         "	CASE WHEN vehiculos.folio IS NULL THEN ' ' ELSE vehiculos.folio END AS folio, \n" +
         "	CASE WHEN dependencia.descripcion IS NULL THEN ' ' ELSE dependencia.descripcion END AS dependencia, \n" +
         "	CASE WHEN CAST(vehiculos.cantidad AS TEXT)='0' OR CAST(vehiculos.cantidad AS TEXT) IS NULL THEN ' '  ELSE CAST(vehiculos.cantidad AS TEXT ) END AS cantidad\n" +
