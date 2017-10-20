@@ -64,14 +64,18 @@ public class QR extends HttpServlet {
                     String gConsecutivo = request.getParameter("consecutivo");
                     String gField = request.getParameter("field");
                     
+                    
+                    int gConsecutivoo = Integer.parseInt(gConsecutivo);
+                    
                     /*
                     * Se agrega if para pasear el consecutivo 
                     */                  
-                    if(Integer.parseInt(gConsecutivo) <= 9){
-                        gConsecutivo = "00" + gConsecutivo;
-                    }else if(Integer.parseInt(gConsecutivo)> 9 && Integer.parseInt(gConsecutivo) <= 99){
-                        gConsecutivo = "0" + gConsecutivo;
+                    if(gConsecutivoo <= 9){
+                        gConsecutivo = "00" + gConsecutivoo;
+                    }else if(gConsecutivoo> 9 && gConsecutivoo <= 99){
+                        gConsecutivo = "0" + gConsecutivoo;
                     }
+                   
                     
                     
                     UserDTO userDto = userDao.getUser(Integer.parseInt(gUser));
