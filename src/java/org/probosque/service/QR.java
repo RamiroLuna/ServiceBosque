@@ -81,10 +81,7 @@ public class QR extends HttpServlet {
                     
                     UserDTO userDto = userDao.getUser(Integer.parseInt(gUser));
                     programa=userDto.getProgram();
-                     //Jon PDF
-                    String subField = gField.substring(0,3);
-                    String archivo = "pdf";
-                    // fin  
+
                     programa=userDto.getProgram();
                     
                     File nfsPDF = new File("C:\\sifem\\programa"+programa+"\\qr\\" + gFolio + "_" + gField + "_" + gConsecutivo+".pdf");                 
