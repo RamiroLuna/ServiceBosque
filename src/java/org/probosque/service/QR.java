@@ -64,13 +64,15 @@ public class QR extends HttpServlet {
                     String gConsecutivo = request.getParameter("consecutivo");
                     String gField = request.getParameter("field");
                     
+                    int gConsecutivoo = Integer.parseInt(gConsecutivo);
+                    
                     /*
                     * Se agrega if para pasear el consecutivo 
                     */                  
-                    if(Integer.parseInt(gConsecutivo) <= 9){
-                        gConsecutivo = "00" + gConsecutivo;
-                    }else if(Integer.parseInt(gConsecutivo)> 9 && Integer.parseInt(gConsecutivo) <= 99){
-                        gConsecutivo = "0" + gConsecutivo;
+                    if(gConsecutivoo <= 9){
+                        gConsecutivo = "00" + gConsecutivoo;
+                    }else if(gConsecutivoo> 9 && gConsecutivoo <= 99){
+                        gConsecutivo = "0" + gConsecutivoo;
                     }
                     
                     
@@ -86,20 +88,13 @@ public class QR extends HttpServlet {
                     //Si el Field es PDF ... 
                     if (nfsPDF.exists()) {
                         
-                        FileInputStream fis = new FileInputStream(nfsPDF);
-                        BufferedInputStream bis = new BufferedInputStream(fis);
-                        ServletOutputStream sos = response.getOutputStream();
-                        byte[] buffer = new byte[4096];
-                        while (true) {
-                          int bytesRead = bis.read(buffer, 0, buffer.length);
-                          if (bytesRead < 0) {
-                            break;
-                          }
-                        sos.write(buffer, 0, bytesRead);
-                        sos.flush();
-                        }
-                        sos.flush();
-                        bis.close();
+                        FileInputStream fis = new FileInputStream(nfsPDF.getPath());
+                        int tamano = fis.available();
+                        byte[] datosPDF = new byte[tamano];
+                        fis.read(datosPDF, 0, tamano);
+                        response.setContentLength(tamano);
+                        response.getOutputStream().write(datosPDF);
+                        fis.close();
 
                     }else{
                         String ext = "png";
@@ -207,6 +202,8 @@ public class QR extends HttpServlet {
             response.getWriter().print(ex.getMessage());
             //Logger.etLogger(QR.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+
 
     }
 
