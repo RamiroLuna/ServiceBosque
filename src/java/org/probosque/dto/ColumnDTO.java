@@ -8,7 +8,7 @@ import org.probosque.dao.SQL;
  *
  * @author admin
  */
-public class ColumnDTO{
+public class ColumnDTO implements Cloneable{
 
     private String folio;
     private String type;
@@ -30,8 +30,32 @@ public class ColumnDTO{
     private Object value;
     private Object filter;
     private boolean onlyselect;
+    
+    public ColumnDTO(){}
 
+    public ColumnDTO(String folio, String type, String label, String name, String datatype, String listname, int max_length, int min_length, boolean searchable, boolean editable, boolean privacy, String records, ListDTO list, List<ColumnDTO> fields, Object value, Object filter, boolean onlyselect) {
+        this.folio = folio;
+        this.type = type;
+        this.label = label;
+        this.name = name;
+        this.datatype = datatype;
+        this.listname = listname;
+        this.max_length = max_length;
+        this.min_length = min_length;
+        this.searchable = searchable;
+        this.editable = editable;
+        this.privacy = privacy;
+        this.records = records;
+        this.list = list;
+        this.fields = fields;
+        this.value = value;
+        this.filter = filter;
+        this.onlyselect = onlyselect;
+    }
 
+    
+    
+ 
 
     public String getSQLSelect() {
         String sql = "";
@@ -353,5 +377,11 @@ public class ColumnDTO{
     @Override
     public String toString() {
         return this.getName();
+    }
+    
+    //override clone method of Object class
+    @Override
+    public ColumnDTO clone() throws CloneNotSupportedException{
+	return (ColumnDTO)super.clone();
     }
 }

@@ -77,9 +77,8 @@ public class ControllerSubTable {
             UserDAO userDao = new UserDAO();
             UserDTO user = userDao.getUser(Integer.parseInt(_user));
             SubTableDAO dao = new SubTableDAO();
-            TableDTO table = new TableDTO();
-            table.setColumns((ArrayList<ColumnDTO>) dao.getColumns(user, _tableName + "_info", _folio));
-            List<TableDTO> tables = dao.getTables(table, _tableName, _folio, user);
+            ArrayList<ColumnDTO> form = (ArrayList<ColumnDTO>) dao.getColumns(user, _tableName + "_info", _folio);
+            List<TableDTO> tables = dao.getTables(form, _tableName, _folio, user);
             output.setData(tables);
         } catch (Exception ex) {
             Logger.getLogger(ControllerSubTable.class.getName()).log(Level.SEVERE, null, ex);
@@ -92,7 +91,7 @@ public class ControllerSubTable {
         return output;
 
     }
-
+    
     public OutputJson insertTable(HttpServletRequest request) throws SQLException, IOException {
         OutputJson output = new OutputJson();
         ResponseJson response = new ResponseJson();

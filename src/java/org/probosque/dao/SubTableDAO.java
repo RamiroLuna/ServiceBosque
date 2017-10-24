@@ -23,6 +23,7 @@ import org.probosque.dto.UserDTO;
 import org.probosque.model.PDFcontent;
 import org.probosque.model.PDFrow;
 
+
 /**
  * Clase que administra en base de datos la información de los multiregistros contenidos en algunos formularios dependiendo del programa
  * @author admin
@@ -792,9 +793,11 @@ public String getMultiregistro(UserDTO user,String tableName) throws SQLExceptio
   
     
     
-    public ArrayList<TableDTO> getTables(TableDTO table, String tableName, String folio, UserDTO user) {
+    public ArrayList<TableDTO> getTables(ArrayList<ColumnDTO> formulario, String tableName, String folio, UserDTO user) {
         final ArrayList<TableDTO> tables = new ArrayList<>();
-
+        TableDTO table = new TableDTO();
+        table.setColumns(formulario);
+        
         Statement stmt = null;
         ResultSet rs = null;
         Connection con = null;
@@ -822,15 +825,29 @@ public String getMultiregistro(UserDTO user,String tableName) throws SQLExceptio
         try {
             con = PoolDataSource.getDataSource(user).getConnection();
             stmt = con.createStatement();
-
             rs = stmt.executeQuery(sql.toString());
-
+            int contador =0;
             while (rs.next()) {
 
+                if(contador == 0){
                 SubTableDAO dao = new SubTableDAO();
+                formulario =  (ArrayList<ColumnDTO>) dao.getColumns(user, tableName + "_info", folio);
+                contador++;
+                }
+             
+                ArrayList<ColumnDTO> copy = new ArrayList<ColumnDTO>(formulario.size());
+                
+                try {
+                    for(ColumnDTO item : formulario){
+                           copy.add(item.clone());
+                    }
+                } catch (Exception e) {
+                    System.out.println("Cloning is not supported by ArrayList element");
+                    e.printStackTrace();
+                }
+                
                 TableDTO newTable = new TableDTO();
-
-                newTable.setColumns((ArrayList<ColumnDTO>) dao.getColumns(user, tableName + "_info", folio));
+                newTable.setColumns(copy);
                 //String numeroDeSitio guarda el numero de sitio de cada multiregistro
                 String numeroDeSitio="";
                 
