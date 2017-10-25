@@ -508,7 +508,7 @@ public class SubTableDAO {
         sql.append(" DELETE FROM ").append(tableName);
         sql.append(" WHERE folio = ? AND consecutivo = ?");
         Object[] params = {
-            folio, consecutivo
+            folio, Integer.parseInt(consecutivo)
         };
         qr.update(sql.toString(), params);
         
