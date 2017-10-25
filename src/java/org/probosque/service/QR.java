@@ -160,19 +160,28 @@ public class QR extends HttpServlet {
                     //Codigo }Jon 
                     
                     String sFichero = "";
+                    String sFichero2 = "";
                     //Si el _Field es "pdf"
                     if (_archivo.equalsIgnoreCase(_subField)) {
                         sFichero = "C:\\sifem\\programa"+programa+"\\qr\\" + _folio + "_" + _field + "_" + _consecutivo+".pdf";
+                        sFichero2 = "C:\\sifem\\programa"+programa+"\\qr\\" + _folio + "_" + _field + "_" + _consecutivo;
                         File fichero = new File(sFichero);
-                        if (fichero.exists()) {
-                            fichero.delete();
+                        File fichero2 = new File(sFichero2);
+                        if (fichero.exists() || fichero2.exists()) {
+                            fichero.delete();                  
+                            fichero2.delete();
                         }
+                        
                     } else {
                         sFichero = "C:\\sifem\\programa"+programa+"\\qr\\" + _folio + "_" + _field + "_" + _consecutivo;
+                        sFichero2 = "C:\\sifem\\programa"+programa+"\\qr\\" + _folio + "_" + _field + "_" + _consecutivo+".pdf";
                         File fichero = new File(sFichero);
-                        if (fichero.exists()) {
-                            fichero.delete();
+                        File fichero2 = new File(sFichero2);
+                        if (fichero.exists() || fichero2.exists()) {
+                            fichero.delete();                    
+                            fichero2.delete();
                         }
+                        
                     }
 
                     OutputStream outFile = null;
