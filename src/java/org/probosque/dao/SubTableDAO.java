@@ -543,9 +543,10 @@ public String getMultiregistro(UserDTO user,String tableName) throws SQLExceptio
        if (nombreMultiregistro==null)
            nombreMultiregistro=" ";
       
+       rs.close();
        sta.close();
        con.close();
-       
+        
        
        return nombreMultiregistro;
      }      
@@ -582,7 +583,7 @@ public String getMultiregistro(UserDTO user,String tableName) throws SQLExceptio
         rs.close();
         sta.close();
         rs1.close();
-        sta.close();
+        sta1.close();
         connection.close();
         return data;
     }
