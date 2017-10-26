@@ -70,6 +70,7 @@ public class UserDAO {
         };
         ResultSetHandler rsh = new BeanHandler(UserDTO.class);
         UserDTO user = (UserDTO) qr.query(sql.toString(), rsh, params);
+        
         return user;
     }
 

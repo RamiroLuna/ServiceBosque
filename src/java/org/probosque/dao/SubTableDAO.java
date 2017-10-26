@@ -512,6 +512,8 @@ public class SubTableDAO {
         };
         qr.update(sql.toString(), params);
         
+        
+        
           LogDAO log=new LogDAO();
                 String lusr=user.getId()+"-"+user.getFirstname()+" "+user.getLastname()+"-"+user.getProgram();
                 log.log(lusr,1,"Se eliminan datos en el Multiregistro "+getMultiregistro(user,tableName)+" con Folio "+folio+" el consecutivo es"+consecutivo);
@@ -540,6 +542,11 @@ public String getMultiregistro(UserDTO user,String tableName) throws SQLExceptio
             }
        if (nombreMultiregistro==null)
            nombreMultiregistro=" ";
+      
+       sta.close();
+       con.close();
+       
+       
        return nombreMultiregistro;
      }      
     public ArrayList<String> queryList(UserDTO user, String activity, TableDTO table,String tableName,String consecutivo) throws SQLException

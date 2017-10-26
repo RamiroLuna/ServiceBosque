@@ -70,6 +70,7 @@ public class LogDAO {
       sql.append(Actividad(idactividad)).append("',now(), '").append(antes).append("')");
       qr.update(sql.toString());
       
+      
    }
     
     public List<LogDTO> getLogfecha(String fecha1, String fecha2, String Programa) throws SQLException{
