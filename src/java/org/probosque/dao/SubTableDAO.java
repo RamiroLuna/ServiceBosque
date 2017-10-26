@@ -171,7 +171,7 @@ public class SubTableDAO {
         DataSource ds = PoolDataSource.getDataSource(user);
         Connection con  = ds.getConnection();
         Statement sta = con.createStatement();
-        QueryRunner qr = new QueryRunner(ds);
+       
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT cast(volumen as text) as result");
         sql.append(" FROM formularios.sitios");
@@ -184,6 +184,7 @@ public class SubTableDAO {
         while(rs.next()){
             result= rs.getString("result");
         }
+        rs.close();
         sta.close();
         con.close();
         return result;
@@ -193,8 +194,7 @@ public class SubTableDAO {
         String result = "";
         DataSource ds = PoolDataSource.getDataSource(user);
         Connection con  = ds.getConnection();
-        Statement sta = con.createStatement();
-        QueryRunner qr = new QueryRunner(ds);
+        Statement sta = con.createStatement();        
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT DISTINCT anio as result");
         sql.append(" FROM formularios.areascorta");
@@ -206,7 +206,8 @@ public class SubTableDAO {
         while(rs.next()){
             result= rs.getString("result");
         }
-        sta.close();;
+        rs.close();
+        sta.close();
         con.close();
         return result;
     }

@@ -80,13 +80,14 @@ public class ControllerSubTable {
             ArrayList<ColumnDTO> form = (ArrayList<ColumnDTO>) dao.getColumns(user, _tableName + "_info", _folio);
             List<TableDTO> tables = dao.getTables(form, _tableName, _folio, user);
             output.setData(tables);
+            response.setSucessfull(true);
+            response.setMessage("Formulario");
         } catch (Exception ex) {
             Logger.getLogger(ControllerSubTable.class.getName()).log(Level.SEVERE, null, ex);
             response.setSucessfull(false);
             response.setMessage(ex.getMessage());
         }
-        response.setSucessfull(true);
-        response.setMessage("Formulario");
+        
         output.setResponse(response);
         return output;
 
@@ -346,13 +347,14 @@ public class ControllerSubTable {
             UserDTO user = userDao.getUser(Integer.parseInt(_user));
             SubTableDAO dao = new SubTableDAO();
             output.setData(dao.getListMunicipios(user, Integer.parseInt(id_estado)));
+            response.setSucessfull(true);
         } catch (Exception ex) {
             Logger.getLogger(ControllerSubTable.class.getName()).log(Level.SEVERE, null, ex);
             response.setSucessfull(false);
             response.setMessage(ex.getMessage());
         }
-        response.setSucessfull(true);
-        //response.setMessage("Formulario");
+        
+        
         output.setResponse(response);
         return output;
     }
@@ -369,13 +371,14 @@ public class ControllerSubTable {
             UserDTO user = userDao.getUser(Integer.parseInt(_user));
             SubTableDAO dao = new SubTableDAO();
             output.setData(dao.getSubCategoria(user, Integer.parseInt(idCategoria)));
+            response.setSucessfull(true);
+            
         } catch (Exception ex) {
             
             response.setSucessfull(false);
             response.setMessage(ex.getMessage());
         }
-        response.setSucessfull(true);
-        //response.setMessage("Formulario");
+        
         output.setResponse(response);
         return output;
     }    
