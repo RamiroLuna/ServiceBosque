@@ -139,6 +139,7 @@ public class ColumnDTO implements Cloneable{
                 String extra = " AND " + tableName + "." + this.getName() + " = " + "join" + this.getName() + ".id ";
                 extra = extra.replaceFirst("localidad =", "municipio =");
                 extra = extra.replaceFirst("localidad.id AS", "localidad.id_municipio AS");
+                extra = extra.replaceFirst("localidad.id", "localidad.id_municipio");
                 sql += extra;
             } else {
                 
