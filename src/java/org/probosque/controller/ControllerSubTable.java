@@ -383,4 +383,28 @@ public class ControllerSubTable {
         return output;
     }    
  
+ public OutputJson editNoConglomerado(HttpServletRequest request){
+     String _user = request.getParameter("user");
+     String numeroConglomerado = request.getParameter("numeroConglomerado");
+     String folio = request.getParameter("folio");
+     
+     OutputJson output = new OutputJson();
+     ResponseJson response = new ResponseJson();
+     
+     try{
+         UserDAO userDao = new UserDAO();
+         UserDTO user = userDao.getUser(Integer.parseInt(_user));
+         SubTableDAO dao = new SubTableDAO();
+         output.setData(dao.editNoConglomeradoSitios(user, numeroConglomerado, folio));
+         output.setData(dao.editNoConglomerado(user, numeroConglomerado, folio));
+         response.setSucessfull(true);
+     }
+     
+     catch(Exception ex){
+         response.setSucessfull(false);
+         response.setMessage(ex.getMessage());
+     }
+     output.setResponse(response);
+     return output;
+ }
 }

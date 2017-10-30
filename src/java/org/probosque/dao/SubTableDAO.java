@@ -1140,4 +1140,38 @@ public String getMultiregistro(UserDTO user,String tableName) throws SQLExceptio
         return dto;
    }  
     
+    public Boolean editNoConglomeradoSitios(UserDTO user, String noConglomerado, String folio) throws SQLException, Exception{
+        DataSource ds = PoolDataSource.getDataSource(user);
+        QueryRunner qr = new QueryRunner(ds);
+        StringBuilder sql = new StringBuilder();
+        
+        sql.append("update formularios.sitios set conglomerado = ?");
+        sql.append("where folio = ?");
+        
+        Object[] params = {
+            noConglomerado, folio
+        };
+        
+        qr.update(sql.toString(), params);
+        
+        return true;
+    }
+    
+     public Boolean editNoConglomerado(UserDTO user, String noConglomerado, String folio) throws SQLException, Exception{
+        DataSource ds = PoolDataSource.getDataSource(user);
+        QueryRunner qr = new QueryRunner(ds);
+        StringBuilder sql = new StringBuilder();
+        
+        sql.append("update formularios.s400 set num_conglomerado = ?");
+        sql.append("where folio = ?");
+        
+        Object[] params = {
+            noConglomerado, folio
+        };
+        
+        qr.update(sql.toString(), params);
+        
+        return true;
+    }
+    
 }

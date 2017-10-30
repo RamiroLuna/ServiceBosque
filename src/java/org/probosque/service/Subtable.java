@@ -53,6 +53,10 @@ public class Subtable extends HttpServlet {
                 case "set":
                     output = controller.editTable(request);
                     break;
+                    
+                case "editNoConglomerado":
+                    output = controller.editNoConglomerado(request);
+                    break;
                 case "add":
                     //Victor Porcayo Altamirano
                     mensaje = controller.validar(request);
