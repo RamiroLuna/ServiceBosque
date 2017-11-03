@@ -291,7 +291,7 @@ public class ControllerTable {
             
             String where = "";
             switch(_datatype){
-                case "string":case "alphanumeric": case "time":
+                case "string":case "alphanumeric": case "time": case "date":
                     where = " WHERE UPPER("+_field+") LIKE " + "'%" + _key.toUpperCase() + "%'";
                     break;
                 case "real":
