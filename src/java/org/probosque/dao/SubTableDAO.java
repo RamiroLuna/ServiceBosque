@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.DataSource;
@@ -13,6 +14,7 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapHandler;
 import org.probosque.dto.CatalogoDTO;
 import org.probosque.dto.ColumnDTO;
 import org.probosque.dto.FolioDTO;
@@ -478,6 +480,44 @@ public class SubTableDAO {
         LogDAO log=new LogDAO();
                 String lusr=user.getId()+"-"+user.getFirstname()+" "+user.getLastname()+"-"+user.getProgram();
                 log.log(lusr,1,"Se registra datos en el Multiregistro "+getMultiregistro(user,tableName)+" con Folio "+table.getFolio());
+    }
+    
+    /*
+    * Actualiza el numero de personas cuando se:
+    * insertar , edita o elimina un multiregitro de participantes 
+    */
+    public void updateTotalPerson(UserDTO user, TableDTO table, String folio) throws Exception {
+        DataSource ds = PoolDataSource.getDataSource(user);
+        QueryRunner qr = new QueryRunner(ds);
+        StringBuilder sql = new StringBuilder();
+        ResultSetHandler rsh = new MapHandler();
+        String tipo = "";
+        
+        /*
+        * Recupera el total 
+        */
+        for (ColumnDTO columna : table.getColumns()){
+            if(columna.getName().equals("genero")){
+                // El numero 1 es el valor del combo en el formulario
+                tipo = columna.getValue().equals("1")? "total_hombres" : "total_mujeres";
+                break;
+            }
+        }
+        sql.append( " SELECT ").append( tipo ).append (" FROM FORMULARIOS.PRINCIPAL WHERE FOLIO = '" ).append(folio).append("'");
+        Map clientMap = (Map) qr.query(sql.toString(), rsh);
+        int cantidad = Integer.parseInt(clientMap.get(tipo).toString());
+       
+           cantidad++;
+        
+       /*
+        * Actualiza dato 
+        
+        */
+        sql = new StringBuilder();
+        sql.append(" UPDATE FORMULARIOS.PRINCIPAL SET ").append(tipo).append(" = ").append(cantidad)
+                .append(" WHERE FOLIO = '").append( folio ).append("'");
+        qr.update(sql.toString());
+       
     }
 
     

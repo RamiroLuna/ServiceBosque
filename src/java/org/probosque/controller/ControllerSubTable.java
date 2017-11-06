@@ -125,6 +125,11 @@ public class ControllerSubTable {
 
             SubTableDAO dao = new SubTableDAO();
             dao.insertTable(user, tableJson, _tableName);
+            
+            if(_tableName.equalsIgnoreCase("formularios.participantes")){
+                 
+                dao.updateTotalPerson(user, tableJson , _folio );
+            }
 
             response.setSucessfull(true);
             response.setMessage("Datos guardados correctamente");
@@ -226,6 +231,11 @@ public class ControllerSubTable {
             UserDTO user = userDao.getUser(Integer.parseInt(_user));
 
             dao.deleteTable(user, _tableName, _folio, _consecutivo);
+            
+            if(_tableName.equalsIgnoreCase("formularios.participantes")){
+                // dao.updateTotalPerson(user, tableJson , _folio , "delete");
+            }
+            
             response.setSucessfull(true);
             response.setMessage("El registro se ha eliminado");
 
