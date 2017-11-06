@@ -230,11 +230,14 @@ public class ControllerSubTable {
             UserDAO userDao = new UserDAO();
             UserDTO user = userDao.getUser(Integer.parseInt(_user));
 
-            dao.deleteTable(user, _tableName, _folio, _consecutivo);
             
             if(_tableName.equalsIgnoreCase("formularios.participantes")){
-                // dao.updateTotalPerson(user, tableJson , _folio , "delete");
+                 dao.updateTotalPerson(user , _consecutivo ,_folio );
             }
+            
+            dao.deleteTable(user, _tableName, _folio, _consecutivo);
+            
+
             
             response.setSucessfull(true);
             response.setMessage("El registro se ha eliminado");

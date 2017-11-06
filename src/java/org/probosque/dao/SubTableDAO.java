@@ -519,7 +519,42 @@ public class SubTableDAO {
         qr.update(sql.toString());
        
     }
-
+    
+    /*
+    * Decrementa el total de personas cuando se elimina un multiregistro
+    * de participantes
+    */
+    public void updateTotalPerson(UserDTO user, String consecutivo ,String folio)throws Exception{
+        DataSource ds = PoolDataSource.getDataSource(user);
+        QueryRunner qr = new QueryRunner(ds);
+        StringBuilder sql = new StringBuilder();
+        ResultSetHandler rsh = new MapHandler();
+        String tipo = "";
+        
+        //Identifica que se elimina hombre o mujer
+        sql.append( " SELECT genero ").append (" FROM FORMULARIOS.PARTICIPANTES ")
+                .append ("WHERE FOLIO = '" ).append(folio).append("' AND ")
+                .append( "CONSECUTIVO = ").append( consecutivo );
+        Map clientMap = (Map) qr.query(sql.toString(), rsh);
+        
+        tipo = clientMap.get("genero").toString().equals("1")? "total_hombres" : "total_mujeres";
+        
+        //Consulta cuantos hay dependiendo el tipo
+        sql = new StringBuilder();
+        sql.append( " SELECT ").append( tipo ).append (" FROM FORMULARIOS.PRINCIPAL WHERE FOLIO = '" ).append(folio).append("'");
+        Map client = (Map) qr.query(sql.toString(), rsh);
+        int cantidad = Integer.parseInt(client.get(tipo).toString());
+       
+           cantidad--;
+           
+        //Actualiza el dato 
+        sql = new StringBuilder();
+        sql.append(" UPDATE FORMULARIOS.PRINCIPAL SET ").append(tipo).append(" = ").append(cantidad)
+                .append(" WHERE FOLIO = '").append( folio ).append("'");
+        qr.update(sql.toString());
+    
+    }
+    
     
     public void editTable(UserDTO user, TableDTO table, String tableName, String folio, String consecutivo) throws Exception {
         ArrayList<String> dataOld= queryList(user, String.valueOf(user.getActivity()), table, tableName,consecutivo); 
