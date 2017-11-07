@@ -484,7 +484,7 @@ public class SubTableDAO {
     
     /*
     * Actualiza el numero de personas cuando se:
-    * insertar , edita o elimina un multiregitro de participantes 
+    * insertar un multiregitro de participantes 
     */
     public void updateTotalPerson(UserDTO user, TableDTO table, String folio) throws Exception {
         DataSource ds = PoolDataSource.getDataSource(user);
@@ -503,7 +503,8 @@ public class SubTableDAO {
                 break;
             }
         }
-        sql.append( " SELECT ").append( tipo ).append (" FROM FORMULARIOS.PRINCIPAL WHERE FOLIO = '" ).append(folio).append("'");
+        sql.append( " SELECT CASE WHEN ").append( tipo ).append (" IS NULL THEN 0 ELSE ").append( tipo )
+                    .append(" END FROM FORMULARIOS.PRINCIPAL WHERE FOLIO = '" ).append(folio).append("'");
         Map clientMap = (Map) qr.query(sql.toString(), rsh);
         int cantidad = Integer.parseInt(clientMap.get(tipo).toString());
        
@@ -541,7 +542,8 @@ public class SubTableDAO {
         
         //Consulta cuantos hay dependiendo el tipo
         sql = new StringBuilder();
-        sql.append( " SELECT ").append( tipo ).append (" FROM FORMULARIOS.PRINCIPAL WHERE FOLIO = '" ).append(folio).append("'");
+        sql.append( " SELECT CASE WHEN ").append( tipo ).append( " IS NULL THEN 0 ELSE ").append( tipo )
+                  .append (" END FROM FORMULARIOS.PRINCIPAL WHERE FOLIO = '" ).append(folio).append("'");
         Map client = (Map) qr.query(sql.toString(), rsh);
         int cantidad = Integer.parseInt(client.get(tipo).toString());
        
