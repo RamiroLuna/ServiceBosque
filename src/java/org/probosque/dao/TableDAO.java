@@ -38,7 +38,7 @@ import org.probosque.model.Tools;
 
 public class TableDAO {
 
-    public List<ColumnDTO> getColumns(UserDTO user, String activity, boolean ignoreNull, int id_municipio) throws Exception {
+    public List<ColumnDTO> getColumns(UserDTO user, String activity, boolean ignoreNull, int id_municipio, int id_region) throws Exception {
         DataSource ds = PoolDataSource.getDataSource(user);
         QueryRunner qr = new QueryRunner(ds);
         StringBuilder sql = new StringBuilder();
@@ -68,6 +68,16 @@ public class TableDAO {
                     column.setList(catalogoDao.getList(user, column.getListname(),0));
                 }
                 else{
+                    /*
+                     * @Decription 
+                     * Issue para filtrar los municipios en base a la region
+                     */
+                    if (column.getName().equals("modulopredio_municipio")) {
+                       column.setList(catalogoDao.getList(user, column.getListname().replaceAll("null;", ""), id_region));
+                    }else 
+                    /*
+                     * Fin issue
+                     */
                     if (id_municipio != 0) {
                        column.setList(catalogoDao.getList(user, column.getListname().replaceAll("null;", ""), id_municipio));
                     }else{
@@ -2117,6 +2127,22 @@ public List<MetaDTO> ObtenerRegionMeta(UserDTO user) throws Exception {
         }
     }
     
+        public int GetIdRegionByFolio(UserDTO user, String folio) throws Exception{
+        DataSource ds = PoolDataSource.getDataSource(user);
+        QueryRunner qr = new QueryRunner(ds);
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT region as result");
+        sql.append(" FROM ").append(SQL.getTableMain(user,String.valueOf(user.getActivity())));; 
+        sql.append(" WHERE folio = ?");
+        Object[] params = {folio};
+        ResultSetHandler rsh = new BeanHandler(ResultInteger.class);
+        ResultInteger result = (ResultInteger) qr.query(sql.toString(), rsh, params);
+        if (result != null) {
+            return result.getResult();
+        } else {
+            return 0;
+        }
+    }
       public List<CatalogoDTO> getCatalogoInspeccion(UserDTO user, String region, String municipio, String localidad,  String tipoInspeccion) throws Exception 
      {
          ResultSetHandler rsh = new BeanListHandler(CatalogoDTO.class);

@@ -50,12 +50,14 @@ public class ControllerTable {
             TableDTO table = new TableDTO();
             
             int id_municipio = 0;
+            int id_region = 0;
             if (user.getProgram() != 13  && _folio!=null) {
                 id_municipio = dao.GetIdMunicipioByFolio(user, _folio);
+                id_region = dao.GetIdRegionByFolio(user, _folio);
             }
             
             if(_report == null) {
-                table.setColumns((ArrayList<ColumnDTO>) dao.getColumns(user, _activity,  _folio!=null, id_municipio));
+                table.setColumns((ArrayList<ColumnDTO>) dao.getColumns(user, _activity,  _folio!=null, id_municipio, id_region));
             } else {
                 table.setColumns((ArrayList<ColumnDTO>) dao.getColumnsForReport(user, _activity));
             }
@@ -64,8 +66,7 @@ public class ControllerTable {
             
             response.setSucessfull(true);
             response.setMessage("Formulario");
-            //output.setData(dao.getColumns());
-            //output.setData(table.getColumns());
+
             
             List<ColumnDTO> columns = dao.getValues(user, _activity, table, _folio).getColumns();
             
@@ -160,15 +161,14 @@ public class ControllerTable {
     
             TableDAO dao = new TableDAO();
             TableDTO table = new TableDTO();
-            //table.setColumns((ArrayList<ColumnDTO>) dao.getColumns(user, tableName, user.getProgram(), user.getRole_id()));
+            
             
             table.setColumns((ArrayList<ColumnDTO>) dao.getColumnsSearchable(user, _activity));
             //table = dao.setValues(table);
             
             response.setSucessfull(true);
             response.setMessage("Formulario");
-            //output.setData(dao.getColumns());
-            //output.setData(table.getColumns());
+
             
             
             output.setData(table.getColumns());            

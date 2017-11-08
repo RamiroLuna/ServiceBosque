@@ -141,6 +141,12 @@ public class CatalogoDAO {
                                 ListDTO list = new ListDTO();
                                 list.setList(this.getListDataModuloPredio(listName, id_municipio));
                                 return list;
+                            }else  if (listName.contains("catalogos.municipio") && id_municipio != 0) {
+                                //Cuando entra a este if el id_municipio se considera como el id_region 
+                                //Se toma de esta manera para evitar dañar el proceo 
+                                ListDTO list = new ListDTO();
+                                list.setList(this.getListDataModuloPredio(listName, id_municipio));
+                                return list;
                             }else{
                                 ListDTO list = new ListDTO();
                                 list.setList(this.getListDataModuloPredio(listName,0));
@@ -193,6 +199,13 @@ public class CatalogoDAO {
         sql.append(" SELECT id, descripcion");
         sql.append(" FROM ").append(tableName);
         
+        
+        if (tableName.contains("municipio")) {
+            //En caso de entrar aqui se toma id_municipio como el id de la region
+            sql.append(" WHERE id_region = ?");
+            sql.append(" GROUP BY id, descripcion");
+        }
+        
         if (tableName.contains("localidad")) {
             sql.append(" WHERE id_municipio = ?");
             sql.append(" GROUP BY id, descripcion");
@@ -205,6 +218,11 @@ public class CatalogoDAO {
         }
         
         if (tableName.contains("localidad")) {
+            Object[] params = {Integer.valueOf(id_municipio)};
+            ResultSetHandler rsh = new BeanListHandler(CatalogoDTO.class);
+            List<CatalogoDTO> list = (List<CatalogoDTO>) qr.query(sql.toString(), rsh, params);
+            return list;
+        }else if(tableName.contains("municipio")){
             Object[] params = {Integer.valueOf(id_municipio)};
             ResultSetHandler rsh = new BeanListHandler(CatalogoDTO.class);
             List<CatalogoDTO> list = (List<CatalogoDTO>) qr.query(sql.toString(), rsh, params);
