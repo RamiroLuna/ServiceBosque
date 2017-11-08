@@ -125,7 +125,7 @@ public class CatalogoDAO {
             if (listName.contains("catalogos.cup")) {
                 ListDTO list = new ListDTO();
                 try {
-                    list.setList(this.getListCup());
+                    list.setList(this.getListCup(id_municipio));
                 } catch (Exception ex) {
                     Logger.getLogger(CatalogoDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -234,15 +234,17 @@ public class CatalogoDAO {
         }
     }
     
-    private List<CatalogoDTO> getListCup() throws Exception {
+    private List<CatalogoDTO> getListCup(int id_municipio) throws Exception {
         DataSource ds = PoolDataSource.getDataSourceGeneral();
         QueryRunner qr = new QueryRunner(ds);
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT folio AS id, TRIM(predio) AS descripcion");
         sql.append(" FROM ").append("formularios.principal");
+        sql.append(" WHERE modulopredio_municipio = ? ");
         sql.append(" ORDER BY descripcion ASC");
+        Object[] params = {Integer.valueOf(id_municipio)};
         ResultSetHandler rsh = new BeanListHandler(CatalogoDTO.class);
-        List<CatalogoDTO> list = (List<CatalogoDTO>) qr.query(sql.toString(), rsh);
+        List<CatalogoDTO> list = (List<CatalogoDTO>) qr.query(sql.toString(), rsh, params);
         return list;
     }
 }

@@ -2127,11 +2127,28 @@ public List<MetaDTO> ObtenerRegionMeta(UserDTO user) throws Exception {
         }
     }
     
-        public int GetIdRegionByFolio(UserDTO user, String folio) throws Exception{
+    public int GetIdRegionByFolio(UserDTO user, String folio) throws Exception{
         DataSource ds = PoolDataSource.getDataSource(user);
         QueryRunner qr = new QueryRunner(ds);
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT region as result");
+        sql.append(" FROM ").append(SQL.getTableMain(user,String.valueOf(user.getActivity())));; 
+        sql.append(" WHERE folio = ?");
+        Object[] params = {folio};
+        ResultSetHandler rsh = new BeanHandler(ResultInteger.class);
+        ResultInteger result = (ResultInteger) qr.query(sql.toString(), rsh, params);
+        if (result != null) {
+            return result.getResult();
+        } else {
+            return 0;
+        }
+    }
+    
+        public int GetIdLocalidadByFolio(UserDTO user, String folio) throws Exception{
+        DataSource ds = PoolDataSource.getDataSource(user);
+        QueryRunner qr = new QueryRunner(ds);
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT modulopredio_localidad as result");
         sql.append(" FROM ").append(SQL.getTableMain(user,String.valueOf(user.getActivity())));; 
         sql.append(" WHERE folio = ?");
         Object[] params = {folio};
