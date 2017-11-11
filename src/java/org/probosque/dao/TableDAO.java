@@ -2020,16 +2020,16 @@ public int getTotalVehiculos(UserDTO user, String folio) throws SQLException
         estado = Tools.completeString(estado, 2);
         region = Tools.completeString(region, 2);
         municipio = Tools.completeString(municipio, 3);
-        localidad = Tools.completeString(localidad, 4);
+        int id_localidad = Integer.parseInt(localidad);
         
         DataSource ds = PoolDataSource.getDataSourceGeneral();
         QueryRunner qr = new QueryRunner(ds);
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT folio AS id, predio AS descripcion");
         sql.append(" FROM ").append(SQL.getTableMain());
-        sql.append(" WHERE folio LIKE ?");
+        sql.append(" WHERE folio LIKE ? AND modulopredio_localidad = ? ");
         String folio = estado + region + municipio + "%";
-        Object[] params = {folio};
+        Object[] params = {folio , id_localidad};
         ResultSetHandler rsh = new BeanListHandler(CatalogoStringDTO.class);
         List<CatalogoStringDTO> requests = (List<CatalogoStringDTO>) qr.query(sql.toString(), rsh, params);
         return requests;
