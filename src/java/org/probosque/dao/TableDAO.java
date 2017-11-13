@@ -56,7 +56,7 @@ public class TableDAO {
                 column.setValue("15");
             }
             if (column.getDatatype().equals("list")) {
-                if (column.getName().contains("modulopredio_")) {
+                if (column.getName().contains("modulopredio_") || column.getName().equals("id_municipio")) {
                     column.setOnlyselect(true);
                 } else {
                     column.setOnlyselect(false);
