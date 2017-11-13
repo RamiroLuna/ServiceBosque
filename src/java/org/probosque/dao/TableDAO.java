@@ -38,7 +38,7 @@ import org.probosque.model.Tools;
 
 public class TableDAO {
 
-    public List<ColumnDTO> getColumns(UserDTO user, String activity, boolean ignoreNull, int id_municipio, int id_region) throws Exception {
+    public List<ColumnDTO> getColumns(UserDTO user, String activity, boolean ignoreNull, int id_municipio, int id_region, int id_localidad) throws Exception {
         DataSource ds = PoolDataSource.getDataSource(user);
         QueryRunner qr = new QueryRunner(ds);
         StringBuilder sql = new StringBuilder();
@@ -74,6 +74,8 @@ public class TableDAO {
                      */
                     if (column.getName().equals("modulopredio_municipio")) {
                        column.setList(catalogoDao.getList(user, column.getListname().replaceAll("null;", ""), id_region));
+                    }else if (column.getName().equals("modulopredio_cup")){
+                        column.setList(catalogoDao.getList(user, column.getListname().replaceAll("null;", "") , id_municipio, id_localidad));
                     }else 
                     /*
                      * Fin issue

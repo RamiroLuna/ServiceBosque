@@ -51,13 +51,16 @@ public class ControllerTable {
             
             int id_municipio = 0;
             int id_region = 0;
+            int id_localidad = 0;
+            
             if (user.getProgram() != 13  && _folio!=null) {
                 id_municipio = dao.GetIdMunicipioByFolio(user, _folio);
                 id_region = dao.GetIdRegionByFolio(user, _folio);
+                id_localidad = dao.GetIdLocalidadByFolio(user, _folio);
             }
             
             if(_report == null) {
-                table.setColumns((ArrayList<ColumnDTO>) dao.getColumns(user, _activity,  _folio!=null, id_municipio, id_region));
+                table.setColumns((ArrayList<ColumnDTO>) dao.getColumns(user, _activity,  _folio!=null, id_municipio, id_region, id_localidad));
             } else {
                 table.setColumns((ArrayList<ColumnDTO>) dao.getColumnsForReport(user, _activity));
             }

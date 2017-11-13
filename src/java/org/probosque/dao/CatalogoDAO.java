@@ -116,21 +116,31 @@ public class CatalogoDAO {
         }
     }
     
+    public ListDTO getList(UserDTO user, String listName, int id_municipio, int id_localidad){
+        ListDTO empty = new ListDTO();
+        List<CatalogoDTO> listEmpty = new ArrayList<>();
+        empty.setList(listEmpty);
+        if (listName != null && !listName.isEmpty()) {
+            if (listName.contains("catalogos.cup")) {
+                try {
+                    ListDTO list = new ListDTO();
+                    list.setList(this.getListCup(id_municipio, id_localidad));
+                    return list;
+                } catch (Exception ex) {
+                    Logger.getLogger(CatalogoDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return empty;
+    }
+    
     public ListDTO getList(UserDTO user, String listName, int id_municipio) {
         ListDTO empty = new ListDTO();
         List<CatalogoDTO> listEmpty = new ArrayList<>();
         empty.setList(listEmpty);
         if (listName != null && !listName.isEmpty()) {
             
-            if (listName.contains("catalogos.cup")) {
-                ListDTO list = new ListDTO();
-                try {
-                    list.setList(this.getListCup(id_municipio));
-                } catch (Exception ex) {
-                    Logger.getLogger(CatalogoDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                return list;
-            } else {
+            if (!listName.contains("catalogos.cup")){
 
                 if (listName.contains("null")) {
                     return empty;
@@ -171,6 +181,7 @@ public class CatalogoDAO {
                     }
                 }
             }
+            return  empty;
         } else {
             return empty;
         }
@@ -234,15 +245,18 @@ public class CatalogoDAO {
         }
     }
     
-    private List<CatalogoDTO> getListCup(int id_municipio) throws Exception {
+    private List<CatalogoDTO> getListCup(int id_municipio, int id_localidad) throws Exception {
         DataSource ds = PoolDataSource.getDataSourceGeneral();
         QueryRunner qr = new QueryRunner(ds);
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT folio AS id, TRIM(predio) AS descripcion");
         sql.append(" FROM ").append("formularios.principal");
-        sql.append(" WHERE modulopredio_municipio = ? ");
+        sql.append(" WHERE modulopredio_municipio = ? AND modulopredio_localidad = ? ");
         sql.append(" ORDER BY descripcion ASC");
-        Object[] params = {Integer.valueOf(id_municipio)};
+        Object[] params = {
+                    Integer.valueOf(id_municipio),
+                    Integer.valueOf(id_localidad)
+        };
         ResultSetHandler rsh = new BeanListHandler(CatalogoDTO.class);
         List<CatalogoDTO> list = (List<CatalogoDTO>) qr.query(sql.toString(), rsh, params);
         return list;
