@@ -2030,6 +2030,7 @@ public int getTotalVehiculos(UserDTO user, String folio) throws SQLException
         sql.append(" SELECT folio AS id, predio AS descripcion");
         sql.append(" FROM ").append(SQL.getTableMain());
         sql.append(" WHERE folio LIKE ? AND modulopredio_localidad = ? ");
+        sql.append(" ORDER BY descripcion ASC ");
         String folio = estado + region + municipio + "%";
         Object[] params = {folio , id_localidad};
         ResultSetHandler rsh = new BeanListHandler(CatalogoStringDTO.class);
