@@ -72,7 +72,7 @@ public class TableDAO {
                      * @Decription 
                      * Issue para filtrar los municipios en base a la region
                      */
-                    if (column.getName().equals("modulopredio_municipio")) {
+                    if (column.getName().equals("modulopredio_municipio") || column.getName().equals("id_municipio")) {
                        column.setList(catalogoDao.getList(user, column.getListname().replaceAll("null;", ""), id_region));
                     }else if (column.getName().equals("modulopredio_cup")){
                         column.setList(catalogoDao.getList(user, column.getListname().replaceAll("null;", "") , id_municipio, id_localidad));
