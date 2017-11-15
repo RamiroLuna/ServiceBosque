@@ -1234,7 +1234,7 @@ public String getMultiregistro(UserDTO user,String tableName) throws SQLExceptio
         return true;
     }
     
-     public Boolean editNoConglomerado(UserDTO user, String noConglomerado, String folio) throws SQLException, Exception{
+    public Boolean editNoConglomerado(UserDTO user, String noConglomerado, String folio) throws SQLException, Exception{
         DataSource ds = PoolDataSource.getDataSource(user);
         QueryRunner qr = new QueryRunner(ds);
         StringBuilder sql = new StringBuilder();
@@ -1250,5 +1250,21 @@ public String getMultiregistro(UserDTO user,String tableName) throws SQLExceptio
         
         return true;
     }
+   
     
+    public Integer updateCountS400(UserDTO user, String folio)throws SQLException, Exception{
+        DataSource ds = PoolDataSource.getDataSource(user);
+        QueryRunner qr = new QueryRunner(ds);
+        StringBuilder sql = new StringBuilder();
+        ResultSetHandler rsh = new MapHandler();
+
+        sql.append( " SELECT COUNT(*) AS TOTAL_MULTIREGISTROS ").append (" FROM FORMULARIOS.S400 ")
+           .append ("WHERE FOLIO = '" ).append(folio).append("' ");
+        Map clientMap = (Map) qr.query(sql.toString(), rsh);
+        
+        int cantidad = Integer.parseInt(clientMap.get("TOTAL_MULTIREGISTROS").toString());
+       
+        return cantidad;
+           
+    }
 }

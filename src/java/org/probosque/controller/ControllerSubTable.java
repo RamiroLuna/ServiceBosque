@@ -396,6 +396,30 @@ public class ControllerSubTable {
         return output;
     }    
  
+ 
+ public OutputJson updateCountS400 (HttpServletRequest request){
+         String _user = request.getParameter("user");
+        String _folio= request.getParameter("folio");
+
+        OutputJson output = new OutputJson();
+        ResponseJson response = new ResponseJson();
+        
+        try {
+            UserDAO userDao = new UserDAO();
+            UserDTO user = userDao.getUser(Integer.parseInt(_user));
+            SubTableDAO dao = new SubTableDAO();
+            output.setData(dao.updateCountS400(user, _folio));
+            response.setSucessfull(true);
+        } catch (Exception ex) {
+            
+            response.setSucessfull(false);
+            response.setMessage(ex.getMessage());
+        }
+        
+        output.setResponse(response);
+        return output;
+ }
+ 
  public OutputJson editNoConglomerado(HttpServletRequest request){
      String _user = request.getParameter("user");
      String numeroConglomerado = request.getParameter("numeroConglomerado");

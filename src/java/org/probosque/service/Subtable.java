@@ -94,8 +94,9 @@ public class Subtable extends HttpServlet {
                 case "getSubcategoria":
                      output=controller.getSubcategoria(request);
                     break;
-                
-                    
+                case "updateCountS400":
+                    output = controller.updateCountS400(request);
+                    break;
                 default :
                     output = controller.getTables(request);
                     break;
