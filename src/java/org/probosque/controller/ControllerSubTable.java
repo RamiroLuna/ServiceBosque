@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.probosque.dao.SubTableDAO;
 import org.probosque.dao.TableDAO;
 import org.probosque.dao.UserDAO;
@@ -96,6 +97,7 @@ public class ControllerSubTable {
     public OutputJson insertTable(HttpServletRequest request) throws SQLException, IOException {
         OutputJson output = new OutputJson();
         ResponseJson response = new ResponseJson();
+        String mensaje = "";
         try {
             String _folio = request.getParameter("folio");
             String _tableName = request.getParameter("name");
@@ -124,7 +126,34 @@ public class ControllerSubTable {
             }
 
             SubTableDAO dao = new SubTableDAO();
-            dao.insertTable(user, tableJson, _tableName);
+            /*
+            * Valida que solo exista un unico numero de arbol para un sitio
+            * en multiregistro sitios del programa 12
+            */
+            if(_tableName.equalsIgnoreCase("formularios.sitios")){
+                String arbol="",sitio = "";
+                    for(ColumnDTO columna: tableJson.getColumns()){
+                        if(columna.getName().equals("num_arbol")){
+                            arbol = columna.getValue().toString();
+                        }else if(columna.getName().equals("sitio")){
+                            sitio = columna.getValue().toString();
+                        }
+                    }
+                
+                /*Si no existe el num "arbol" en el sistio inserta contrario
+                * manda mensaje al usuario
+                */
+                if(dao.isValid(user, _folio, sitio, arbol)){
+                    dao.insertTable(user, tableJson, _tableName);
+                    mensaje = "Datos guardados correctamente";
+                }else{
+                    mensaje = "Ya existe el numero de arbol " + arbol + " para el sitio " + sitio;
+                }
+                
+            }else{
+                dao.insertTable(user, tableJson, _tableName);
+                mensaje = "Datos guardados correctamente";
+            }
             
             if(_tableName.equalsIgnoreCase("formularios.participantes")){
                  
@@ -132,7 +161,7 @@ public class ControllerSubTable {
             }
 
             response.setSucessfull(true);
-            response.setMessage("Datos guardados correctamente");
+            response.setMessage(mensaje);
             output.setResponse(response);
 
         } catch (Exception ex) {
@@ -177,7 +206,9 @@ public class ControllerSubTable {
     public OutputJson editTable(HttpServletRequest request) throws SQLException, IOException {
         OutputJson output = new OutputJson();
         ResponseJson response = new ResponseJson();
-
+        String mensaje = "";
+        boolean b = true;
+        
         try {
             String _json = request.getParameter("json");
 
@@ -200,9 +231,40 @@ public class ControllerSubTable {
             TableDTO tableJson = gson.fromJson(json.trim(), TableDTO.class);
 
             SubTableDAO dao = new SubTableDAO();
-            dao.editTable(user, tableJson, _tableName, _folio, _consecutivo);
-            response.setSucessfull(true);
-            response.setMessage("Datos guardados correctamente");
+            
+           /*
+            * Valida que solo exista un unico numero de arbol para un sitio
+            * en multiregistro sitios del programa 12
+            */
+            if(_tableName.equalsIgnoreCase("formularios.sitios")){
+                String arbol="",sitio = "";
+                    for(ColumnDTO columna: tableJson.getColumns()){
+                        if(columna.getName().equals("num_arbol")){
+                            arbol = columna.getValue().toString();
+                        }else if(columna.getName().equals("sitio")){
+                            sitio = columna.getValue().toString();
+                        }
+                    }
+                
+                /*Si no existe el num "arbol" en el sistio inserta contrario
+                * manda mensaje al usuario
+                */
+                int c =  Integer.parseInt(_consecutivo);
+                if(dao.isValidUpdate(user, _folio, sitio, arbol,c)){
+                    dao.editTable(user, tableJson, _tableName, _folio, _consecutivo);
+                    mensaje = "Datos guardados correctamente";
+                }else{
+                    mensaje = "Ya existe el numero de arbol " + arbol + " para el sitio " + sitio;
+                    b = false;
+                }
+                
+            }else{
+                dao.editTable(user, tableJson, _tableName, _folio, _consecutivo);
+                mensaje = "Datos guardados correctamente";
+            }
+            
+            response.setSucessfull(b);
+            response.setMessage(mensaje);
 
          
         } catch (Exception ex) {

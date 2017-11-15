@@ -1267,4 +1267,48 @@ public String getMultiregistro(UserDTO user,String tableName) throws SQLExceptio
         return cantidad;
            
     }
+    
+    public boolean isValid(UserDTO user, String folio, String sitio , String numero_arbol)throws SQLException, Exception{
+        DataSource ds = PoolDataSource.getDataSource(user);
+        QueryRunner qr = new QueryRunner(ds);
+        StringBuilder sql = new StringBuilder();
+        ResultSetHandler rsh = new MapHandler();
+
+        sql.append( " SELECT COUNT(*) AS TOTAL ")
+           .append (" FROM FORMULARIOS.SITIOS ")
+           .append(" WHERE FOLIO = '").append(folio).append("' AND SITIO = '").append(sitio).append("' AND NUM_ARBOL = '").append (numero_arbol)
+           .append ("'");
+        Map clientMap = (Map) qr.query(sql.toString(), rsh);
+       
+        String cantidad = clientMap.get("TOTAL").toString();
+       
+         return (cantidad.equalsIgnoreCase("0"));  
+    }
+    
+    public boolean isValidUpdate(UserDTO user, String folio, String sitio , String numero_arbol, int consecutivo)throws SQLException, Exception{
+        DataSource ds = PoolDataSource.getDataSource(user);
+        QueryRunner qr = new QueryRunner(ds);
+        StringBuilder sql = new StringBuilder();
+        ResultSetHandler rsh = new MapHandler();
+        
+        sql.append( " SELECT NUM_ARBOL ");
+        sql.append( " FROM FORMULARIOS.SITIOS " );
+        sql.append(" WHERE FOLIO = '").append(folio).append("' AND CONSECUTIVO = ").append(consecutivo);
+        Map numero_arbol_old = (Map) qr.query(sql.toString(), rsh);
+       
+        if(numero_arbol_old.get("NUM_ARBOL").toString().equals(numero_arbol)){
+            return true;
+        }else{
+            sql = new StringBuilder();
+            sql.append( " SELECT COUNT(*) AS TOTAL ")
+               .append (" FROM FORMULARIOS.SITIOS ")
+               .append(" WHERE FOLIO = '").append(folio).append("' AND SITIO = '").append(sitio).append("' AND NUM_ARBOL = '").append (numero_arbol)
+               .append ("'");
+            Map clientMap = (Map) qr.query(sql.toString(), rsh);
+
+            String cantidad = clientMap.get("TOTAL").toString();
+
+         return (cantidad.equalsIgnoreCase("0")); 
+        } 
+    }
 }
