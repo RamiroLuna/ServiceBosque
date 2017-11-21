@@ -899,7 +899,7 @@ public String getMultiregistro(UserDTO user,String tableName) throws SQLExceptio
         else
             if(tableName.equals("formularios.produccion"))
             {
-            sql.append(" ORDER BY cast(area_corta as integer) asc,cast( anio as integer) asc, cast(consecutivo as integer) asc "); 
+            sql.append(" ORDER BY cast(area_corta as integer) asc, anio asc, cast(consecutivo as integer) asc "); 
                  
             }
         
