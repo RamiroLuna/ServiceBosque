@@ -302,10 +302,16 @@ public class TableDTO {
                         if (valueString.isEmpty()) {
                             param = -1;
                         } else {
+                            if(column.getName().equals("numero_arbol"))
+                               {
+                                   param = Integer.parseInt(valueString.trim().split("-")[1]);
+                               }
+                            else
                             if(column.getName().equals("modulopredio_cup"))
                             {
                                 param = valueString;
-                            }else{
+                            }
+                             else{
                                 /*
                                 * Try convierte valueString a numero 
                                 * en caso de ocurrir eror es porque el 
