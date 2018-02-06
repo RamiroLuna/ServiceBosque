@@ -306,10 +306,16 @@ public class ControllerTable {
                     break;
             }
             
-            if(user.getProgram()==6 || user.getProgram()==1 || user.getProgram()==7 || user.getProgram()==10 || user.getProgram()==12){
+            if(user.getProgram() == 7 && user.getActivity() == 3){
+                output.setData(dao.getTables(user, _activity,  table, where, " ORDER BY region, modulopredio_municipio, to_date(fecha_inicio,'%d/%m/%Y') ASC"));
+            }
+            else 
+            if(user.getProgram()==6 || user.getProgram()==1 || user.getProgram() == 7 || user.getProgram()==10 || user.getProgram()==12){
                 //Jonathan Aldama output.setData(dao.getTables(user, _activity,  table, where, " ORDER BY folio"));
                 output.setData(dao.getTables(user, _activity,  table, where, " ORDER BY region, modulopredio_municipio ASC"));
-            }else{
+            }            
+                
+            else{
                 output.setData(dao.getTables(user, _activity,  table, where, " ORDER BY region, modulopredio_municipio ASC"));
             }            
             ArrayList<LabelValue> titles = new ArrayList<>();
