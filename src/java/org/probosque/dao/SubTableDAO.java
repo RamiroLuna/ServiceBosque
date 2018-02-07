@@ -503,7 +503,7 @@ public class SubTableDAO {
                 break;
             }
         }
-        sql.append( " SELECT CASE WHEN ").append( tipo ).append (" IS NULL THEN 0 ELSE ").append( tipo )
+        sql.append( " SELECT CASE WHEN ").append(tipo).append (" IS NULL THEN 0 ELSE ").append(tipo)
                     .append(" END FROM FORMULARIOS.PRINCIPAL WHERE FOLIO = '" ).append(folio).append("'");
         Map clientMap = (Map) qr.query(sql.toString(), rsh);
         int cantidad = Integer.parseInt(clientMap.get(tipo).toString());
