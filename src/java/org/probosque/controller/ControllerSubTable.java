@@ -155,8 +155,7 @@ public class ControllerSubTable {
                 mensaje = "Datos guardados correctamente";
             }
             
-            if(_tableName.equalsIgnoreCase("formularios.participantes")){
-                 
+            if(_tableName.equalsIgnoreCase("formularios.participantes") && user.getProgram() != 8){                 
                 dao.updateTotalPerson(user, tableJson , _folio );
             }
 
