@@ -93,6 +93,45 @@ public OutputJson getPredio( HttpServletRequest request)
         return output;
     }
 
+public OutputJson getMunicipioPredios( HttpServletRequest request)
+    {
+       Gson gson = new Gson();
+        OutputJson output = new OutputJson();
+        ResponseJson response = new ResponseJson();
+        EjecutivoDAO dao =new EjecutivoDAO();
+        try{
+            String c = request.getParameter("clave");
+            String text = request.getParameter("text");
+            output.setData(dao.getMunicipioPredios(c,text));    
+            response.setSucessfull(true);
+        }catch(Exception ex){
+       response.setSucessfull(false);
+       response.setMessage(ex.getMessage());
+      }
+        output.setResponse(response); 
+        return output;
+    }
+
+
+public OutputJson getClave( HttpServletRequest request)
+    {
+       Gson gson = new Gson();
+        OutputJson output = new OutputJson();
+        ResponseJson response = new ResponseJson();
+        EjecutivoDAO dao =new EjecutivoDAO();
+        try{
+            String c = request.getParameter("clave");
+            String text = request.getParameter("text");
+            output.setData(dao.getClave(c,text));    
+            response.setSucessfull(true);
+        }catch(Exception ex){
+       response.setSucessfull(false);
+       response.setMessage(ex.getMessage());
+      }
+        output.setResponse(response); 
+        return output;
+    }
+
 public OutputJson getRepresentantes( HttpServletRequest request)
     {
        Gson gson = new Gson();

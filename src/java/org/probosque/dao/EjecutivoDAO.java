@@ -157,7 +157,6 @@ public List<CatalogoDTO>  getPredio (String clave, String text ) throws SQLExcep
         DataSource ds = PoolDataSource.getDataSource(false);
         QueryRunner qr = new QueryRunner(ds);
         StringBuilder sql = new StringBuilder();    
-        EjecutivoRegionesDTO ejec = new EjecutivoRegionesDTO();
         sql.append(" SELECT folio as id, predio as descripcion");
         sql.append(" FROM ").append(" formularios.principal ");
         sql.append(" WHERE  folio like '%").append(clave).append("%'");
@@ -167,6 +166,36 @@ public List<CatalogoDTO>  getPredio (String clave, String text ) throws SQLExcep
         
         return regiones;
   }
+
+public List<CatalogoDTO>  getMunicipioPredios (String clave, String text ) throws SQLException
+  {
+        DataSource ds = PoolDataSource.getDataSource(false);
+        QueryRunner qr = new QueryRunner(ds);
+        StringBuilder sql = new StringBuilder();    
+        sql.append(" SELECT folio as id, predio as descripcion ");
+        sql.append(" FROM ").append(" formularios.principal p ");
+        sql.append(" LEFT JOIN catalogos.municipio m " );
+        sql.append(" ON m.id = p.modulopredio_municipio ");
+        sql.append(" WHERE UPPER(m.descripcion) like UPPER('%").append(text).append("%')");
+        ResultSetHandler rsh = new BeanListHandler(CatalogoDTO.class);
+        List<CatalogoDTO> regiones= (List<CatalogoDTO>) qr.query(sql.toString(), rsh);
+        return regiones;
+  }
+
+
+    public List<CatalogoDTO>getClave(String clave, String text ) throws SQLException
+    {
+        DataSource ds = PoolDataSource.getDataSource(false);
+        QueryRunner qr = new QueryRunner(ds);
+        StringBuilder sql = new StringBuilder();    
+        sql.append(" SELECT folio as id, predio as descripcion");
+        sql.append(" FROM ").append(" formularios.principal ");
+        sql.append(" WHERE  folio like '%").append(text).append("%'");
+        ResultSetHandler rsh = new BeanListHandler(CatalogoDTO.class);
+        List<CatalogoDTO> regiones= (List<CatalogoDTO>) qr.query(sql.toString(), rsh);
+        
+        return regiones;
+   }
 
 public List<CatalogoDTO>  getRepresentantes (String clave, String text ) throws SQLException
   {
