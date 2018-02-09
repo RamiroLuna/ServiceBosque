@@ -292,7 +292,7 @@ public class ControllerSubTable {
             UserDTO user = userDao.getUser(Integer.parseInt(_user));
 
             
-            if(_tableName.equalsIgnoreCase("formularios.participantes")){
+            if(_tableName.equalsIgnoreCase("formularios.participantes") && user.getProgram() != 8){
                  dao.updateTotalPerson(user , _consecutivo ,_folio );
             }
             
