@@ -58,7 +58,14 @@ public class AuditoriasPreventivas extends HttpServlet {
                      controllerEjecutivo = new ControllerEjecutivo();
                      output=controllerEjecutivo.getRepresentantes(request);
                      break;
-                
+                 case "getMunicipioPredios":
+                     controllerEjecutivo = new ControllerEjecutivo();
+                     output=controllerEjecutivo.getMunicipioPredios(request);
+                     break;
+                case "getClave":
+                     controllerEjecutivo = new ControllerEjecutivo();
+                     output=controllerEjecutivo.getClave(request);
+                     break;
                 case "getDetallePredio":
                      controllerEjecutivo = new ControllerEjecutivo();
                      output=controllerEjecutivo.getDetallesPredio(request);
