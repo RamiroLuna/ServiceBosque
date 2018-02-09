@@ -59,7 +59,8 @@ public class Subtable extends HttpServlet {
                     break;
                 case "add":
                     //Victor Porcayo Altamirano
-                    mensaje = controller.validar(request);
+                    //mensaje = controller.validar(request);
+                    mensaje = "noencontrado";
                     ResponseJson responsej = new ResponseJson();
                     if(("noencontrado".equals(mensaje))){
                         

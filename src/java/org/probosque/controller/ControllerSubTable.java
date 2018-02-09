@@ -333,6 +333,7 @@ public class ControllerSubTable {
             UserDAO userDao = new UserDAO();
             UserDTO user = userDao.getUser(Integer.parseInt(_user));
             existe = dao.validarExistencia(user, _tableName, dato);
+            
             if(!"".equals(existe)){
                 //response.setSucessfull(true);
                 if(_tableName.equals("formularios.infractores")){
