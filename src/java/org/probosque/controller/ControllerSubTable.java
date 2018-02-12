@@ -496,6 +496,7 @@ public class ControllerSubTable {
          SubTableDAO dao = new SubTableDAO();
          output.setData(dao.editNoConglomeradoSitios(user, numeroConglomerado, folio));
          output.setData(dao.editNoConglomerado(user, numeroConglomerado, folio));
+         output.setData(dao.editNoConglomeradoPrincipal(user, numeroConglomerado, folio));
          response.setSucessfull(true);
      }
      

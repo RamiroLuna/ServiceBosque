@@ -1251,6 +1251,22 @@ public String getMultiregistro(UserDTO user,String tableName) throws SQLExceptio
         return true;
     }
    
+        public Boolean editNoConglomeradoPrincipal(UserDTO user, String noConglomerado, String folio) throws SQLException, Exception{
+        DataSource ds = PoolDataSource.getDataSource(user);
+        QueryRunner qr = new QueryRunner(ds);
+        StringBuilder sql = new StringBuilder();
+        
+        sql.append("update formularios.principal set num_conglomerado = ?");
+        sql.append("where folio = ?");
+        
+        Object[] params = {
+            noConglomerado, folio
+        };
+        
+        qr.update(sql.toString(), params);
+        
+        return true;
+    }
     
     public Integer updateCountS400(UserDTO user, String folio)throws SQLException, Exception{
         DataSource ds = PoolDataSource.getDataSource(user);
