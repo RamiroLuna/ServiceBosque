@@ -221,7 +221,8 @@ public class ControllerTable {
             ReforestacionDAO daoReforestacion = new ReforestacionDAO();
 
             if (dao.existsFolio(user, _activity, tableJson.getFolio())) {
-                dao.editTable(user, _activity, tableJson);
+                response.setSucessfull(true);
+                response.setMessage("-1");//-1 indicará en el front-end que el folio ya existe
             } else {
                 dao.insertTable(user, _activity, tableJson);
                 
@@ -250,10 +251,10 @@ public class ControllerTable {
                 }
                 
                 /*FIN CÓDIGO NUEVO PARA REFORESTEMOS MÉXICO*/
-            }
-
             response.setSucessfull(true);
-            response.setMessage("<Datos guardados correctamente> <ITJSON>");
+            response.setMessage("OK");
+            
+            }
 
         } catch (Exception ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Controller:ControllerTable", ex);
