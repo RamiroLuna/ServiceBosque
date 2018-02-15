@@ -479,4 +479,27 @@ public class ControllerTable {
         output.setResponse(response);
         return output;
    }
+    
+        public OutputJson updateVehiculos(HttpServletRequest request) {
+        String _user = request.getParameter("user");
+        String folio = request.getParameter("folio");
+        int cantidad = Integer.parseInt(request.getParameter("cantidad_vehiculos"));
+        int cantidad_sin = Integer.parseInt(request.getParameter("vehiculos_sin_irregu"));
+        
+        OutputJson output = new OutputJson();
+        ResponseJson response = new ResponseJson();
+
+        try {
+            UserDAO userDao = new UserDAO();
+            UserDTO user = userDao.getUser(Integer.parseInt(_user));
+            TableDAO dao = new TableDAO();
+            dao.updateVehiculos(user, folio, cantidad, cantidad_sin);
+            response.setSucessfull(true);
+         } catch (Exception ex) {
+            response.setSucessfull(false);
+            response.setMessage(ex.getMessage());
+        }
+        output.setResponse(response);
+        return output;
+   }
 }

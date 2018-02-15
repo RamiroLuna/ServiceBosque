@@ -70,6 +70,9 @@ public class Table extends HttpServlet {
                 case "getListaIValor":
                      output = controller.getListaIValor(request);
                      break;
+                case "updateVehiculos":
+                     output = controller.updateVehiculos(request);
+                     break;
                     
             }
         } catch (Exception ex) {

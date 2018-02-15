@@ -2245,6 +2245,19 @@ public List<MetaDTO> ObtenerRegionMeta(UserDTO user) throws Exception {
           return industria.getResult();
     
     }
+    
+    public void updateVehiculos(UserDTO user, String folio, int cantidad, int cantidaad_sin) throws SQLException {
+         DataSource ds = PoolDataSource.getDataSource(user);
+           QueryRunner qr = new QueryRunner(ds);
+           StringBuilder sql = new StringBuilder();
+        
+          sql.append(" UPDATE  formularios.principal ");
+          sql.append(" SET vehiculos_revisados = ").append(cantidad).append(" ,");
+          sql.append(" vehiculos_sin_irregularidades = ").append(cantidaad_sin);
+          sql.append(" WHERE folio='").append(folio).append("'");          
+          qr.update(sql.toString());
+          
+    }
  
     
 }
