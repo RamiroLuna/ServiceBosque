@@ -299,8 +299,8 @@ public class TableDTO {
                         break;
                     case "list":
                      
-                        if (valueString.isEmpty()) {
-                            param = -1;
+                        if (valueString.isEmpty() || valueString.equals("-1")) {
+                            param = null;
                         } else {
                             if(column.getName().equals("numero_arbol"))
                                {
@@ -311,6 +311,11 @@ public class TableDTO {
                             {
                                 param = valueString;
                             }
+                            else
+                                if(column.getName().equals("cuenca") || column.getName().equals("subcuenca"))
+                                {
+                                    param = valueString;
+                                }
                              else{
                                 /*
                                 * Try convierte valueString a numero 
