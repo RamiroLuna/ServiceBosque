@@ -82,7 +82,7 @@ public class TableProduccionSemilla {
         String sql = "";
         try {
             if (like.isEmpty() && anio.isEmpty()) {
-            sql="select año, Nombre_cientifico, Nombre_comun, procedencia, fecha_alta, lote_semilla, viabilidad, cantidad, costo FROM `destino semilla`;";
+            sql="select año, Nombre_cientifico, Nombre_comun, procedencia, CAST(fecha_alta AS CHAR) AS fecha_alta, lote_semilla, viabilidad, cantidad, costo FROM `destino semilla`;";
             }else{
                 if (like.isEmpty()) {
                     sql="select año, Nombre_cientifico, Nombre_comun, procedencia, fecha_alta, lote_semilla, viabilidad, cantidad, costo FROM `destino semilla` where REPLACE(año, ' ', '') = "+anio+";";
@@ -100,6 +100,7 @@ public class TableProduccionSemilla {
                 dtotdgp.add(new SemillaDestinoDTO(rs.getInt("año"), rs.getString("Nombre_cientifico"), rs.getString("Nombre_comun"), rs.getString("procedencia"), rs.getString("fecha_alta"), rs.getString("lote_semilla"), rs.getFloat("viabilidad"), rs.getFloat("cantidad"), rs.getFloat("costo")));
             }
         } catch (Exception e) {
+            System.out.println(""+e);
         }finally{
             try{
                 if (conexion.getConnection() != null)conexion.getConnection().close();
