@@ -82,24 +82,25 @@ public class TableProduccionSemilla {
         String sql = "";
         try {
             if (like.isEmpty() && anio.isEmpty()) {
-            sql="select año, Nombre_cientifico, Nombre_comun, procedencia, fecha_alta, lote_semilla, viabilidad, cantidad, costo FROM `destino semilla`;";
+            sql="select año, Nombre_cientifico, Nombre_comun, procedencia, destino, CAST(fecha_alta AS CHAR) AS fecha_alta, lote_semilla, viabilidad, cantidad, costo FROM `destino semilla`;";
             }else{
                 if (like.isEmpty()) {
-                    sql="select año, Nombre_cientifico, Nombre_comun, procedencia, fecha_alta, lote_semilla, viabilidad, cantidad, costo FROM `destino semilla` where REPLACE(año, ' ', '') = "+anio+";";
+                    sql="select año, Nombre_cientifico, Nombre_comun, procedencia, destino, CAST(fecha_alta AS CHAR) AS fecha_alta, lote_semilla, viabilidad, cantidad, costo FROM `destino semilla` where REPLACE(año, ' ', '') = "+anio+";";
                 }else{
                     if (anio.isEmpty()) {
-                        sql="select año, Nombre_cientifico, Nombre_comun, procedencia, fecha_alta, lote_semilla, viabilidad, cantidad, costo FROM `destino semilla` where REPLACE(Nombre_cientifico, ' ', '') LIKE '%"+like+"%' or REPLACE(Nombre_comun, ' ', '') LIKE '%"+like+"%';";
+                        sql="select año, Nombre_cientifico, Nombre_comun, procedencia, destino, CAST(fecha_alta AS CHAR) AS fecha_alta, lote_semilla, viabilidad, cantidad, costo FROM `destino semilla` where REPLACE(Nombre_cientifico, ' ', '') LIKE '%"+like+"%' or REPLACE(Nombre_comun, ' ', '') LIKE '%"+like+"%';";
                     }else{
-                        sql="select año, Nombre_cientifico, Nombre_comun, procedencia, fecha_alta, lote_semilla, viabilidad, cantidad, costo FROM `destino semilla` where REPLACE(año, ' ', '') = "+anio+" and (REPLACE(Nombre_cientifico, ' ', '') LIKE '%"+like+"%' or REPLACE(Nombre_comun, ' ', '') LIKE '%"+like+"%');";
+                        sql="select año, Nombre_cientifico, Nombre_comun, procedencia, destino, CAST(fecha_alta AS CHAR) AS fecha_alta, lote_semilla, viabilidad, cantidad, costo FROM `destino semilla` where REPLACE(año, ' ', '') = "+anio+" and (REPLACE(Nombre_cientifico, ' ', '') LIKE '%"+like+"%' or REPLACE(Nombre_comun, ' ', '') LIKE '%"+like+"%');";
                     }
                 }
             }
             pst = conexion.getConnection().prepareStatement(sql);
             rs = pst.executeQuery();
             while (rs.next()) {
-                dtotdgp.add(new SemillaDestinoDTO(rs.getInt("año"), rs.getString("Nombre_cientifico"), rs.getString("Nombre_comun"), rs.getString("procedencia"), rs.getString("fecha_alta"), rs.getString("lote_semilla"), rs.getFloat("viabilidad"), rs.getFloat("cantidad"), rs.getFloat("costo")));
+                dtotdgp.add(new SemillaDestinoDTO(rs.getInt("año"), rs.getString("Nombre_cientifico"), rs.getString("Nombre_comun"), rs.getString("procedencia"), rs.getString("destino"), rs.getString("fecha_alta"), rs.getString("lote_semilla"), rs.getFloat("viabilidad"), rs.getFloat("cantidad"), rs.getFloat("costo")));
             }
         } catch (Exception e) {
+            System.out.println(""+e);
         }finally{
             try{
                 if (conexion.getConnection() != null)conexion.getConnection().close();

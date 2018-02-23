@@ -24,7 +24,7 @@ import org.probosque.dto.TotalesPP;
  * @author Jonathan
  */
 public class TableProduccionPlanta{
-    ConexionMySQL conexion = new ConexionMySQL("probosque");
+    ConexionMySQL conexion = new ConexionMySQL("produccionplanta");
     public List<ProduccionDTO> ObtenerDatosProduccion(String where, String like, String vivero) throws Exception {
         ArrayList<ProduccionDTO> dtoproduccion = new ArrayList<>();
         PreparedStatement pst = null;

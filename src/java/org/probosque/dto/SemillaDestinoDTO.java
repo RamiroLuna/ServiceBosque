@@ -14,6 +14,7 @@ public class SemillaDestinoDTO {
     private String Nombre_cientifico;
     private String Nombre_comun;
     private String procedencia;
+    private String destino;
     private String fecha_alta;
     private String lote_semilla;
     private float viabilidad; 
@@ -23,11 +24,12 @@ public class SemillaDestinoDTO {
     public SemillaDestinoDTO() {
     }
 
-    public SemillaDestinoDTO(int año, String Nombre_cientifico, String Nombre_comun, String procedencia, String fecha_alta, String lote_semilla, float viabilidad, float cantidad, float costo) {
+    public SemillaDestinoDTO(int año, String Nombre_cientifico, String Nombre_comun, String procedencia, String destino, String fecha_alta, String lote_semilla, float viabilidad, float cantidad, float costo) {
         this.año = año;
         this.Nombre_cientifico = Nombre_cientifico;
         this.Nombre_comun = Nombre_comun;
         this.procedencia = procedencia;
+        this.destino = destino;
         this.fecha_alta = fecha_alta;
         this.lote_semilla = lote_semilla;
         this.viabilidad = viabilidad;
@@ -90,6 +92,16 @@ public class SemillaDestinoDTO {
     public void setProcedencia(String procedencia) {
         this.procedencia = procedencia;
     }
+
+    public String getDestino() {
+        return destino;
+    }
+
+    public void setDestino(String destino) {
+        this.destino = destino;
+    }
+    
+    
 
     /**
      * @return the fecha_alta
