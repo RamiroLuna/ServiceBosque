@@ -85,12 +85,12 @@ public class TableProduccionSemilla {
             sql="select año, Nombre_cientifico, Nombre_comun, procedencia, CAST(fecha_alta AS CHAR) AS fecha_alta, lote_semilla, viabilidad, cantidad, costo FROM `destino semilla`;";
             }else{
                 if (like.isEmpty()) {
-                    sql="select año, Nombre_cientifico, Nombre_comun, procedencia, fecha_alta, lote_semilla, viabilidad, cantidad, costo FROM `destino semilla` where REPLACE(año, ' ', '') = "+anio+";";
+                    sql="select año, Nombre_cientifico, Nombre_comun, procedencia, CAST(fecha_alta AS CHAR) AS fecha_alta, lote_semilla, viabilidad, cantidad, costo FROM `destino semilla` where REPLACE(año, ' ', '') = "+anio+";";
                 }else{
                     if (anio.isEmpty()) {
-                        sql="select año, Nombre_cientifico, Nombre_comun, procedencia, fecha_alta, lote_semilla, viabilidad, cantidad, costo FROM `destino semilla` where REPLACE(Nombre_cientifico, ' ', '') LIKE '%"+like+"%' or REPLACE(Nombre_comun, ' ', '') LIKE '%"+like+"%';";
+                        sql="select año, Nombre_cientifico, Nombre_comun, procedencia, CAST(fecha_alta AS CHAR) AS fecha_alta, lote_semilla, viabilidad, cantidad, costo FROM `destino semilla` where REPLACE(Nombre_cientifico, ' ', '') LIKE '%"+like+"%' or REPLACE(Nombre_comun, ' ', '') LIKE '%"+like+"%';";
                     }else{
-                        sql="select año, Nombre_cientifico, Nombre_comun, procedencia, fecha_alta, lote_semilla, viabilidad, cantidad, costo FROM `destino semilla` where REPLACE(año, ' ', '') = "+anio+" and (REPLACE(Nombre_cientifico, ' ', '') LIKE '%"+like+"%' or REPLACE(Nombre_comun, ' ', '') LIKE '%"+like+"%');";
+                        sql="select año, Nombre_cientifico, Nombre_comun, procedencia, CAST(fecha_alta AS CHAR) AS fecha_alta, lote_semilla, viabilidad, cantidad, costo FROM `destino semilla` where REPLACE(año, ' ', '') = "+anio+" and (REPLACE(Nombre_cientifico, ' ', '') LIKE '%"+like+"%' or REPLACE(Nombre_comun, ' ', '') LIKE '%"+like+"%');";
                     }
                 }
             }
