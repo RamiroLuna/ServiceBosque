@@ -227,7 +227,7 @@ public class ReporteadorDAO {
       
       if(campo_M_P.equals("modulopredio_cup"))
       {  
-      sql.append(" catalogos.predios.predio ");
+      sql.append("catalogos.predios.predio");
       this.updateColumn(user, "campos", sql.toString(),nreport);
         unionLocalidad.append(" inner join catalogos.predios on  catalogos.predios.folio =").append(SQL.getTableMain(user,activity)).append(".modulopredio_cup ");
         
